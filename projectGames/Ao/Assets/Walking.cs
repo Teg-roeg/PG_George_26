@@ -7,6 +7,7 @@
 //
 using UnityEngine;
 
+
 public class Walking : MonoBehaviour
 {
     public float walkSpeed = 6f; // walking speed

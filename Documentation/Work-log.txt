@@ -1,0 +1,36 @@
+This documentation contains information about specific things related to the Games Development project
+
+--==< Quick Brief >==--
+
+
+The genre of this game is hack'n'slash / beatem'up
+
+The game would contain third person view, that view will depend on cameras position - no player control over camera, only relay on cameras position. On the other hand camera position will be depend on player movement and what trigger a player will touch.
+
+The game will contain only melee weapon
+
+The game would be working from keyboard keys and mouse.
+
+The position in space for movement will be depended on Camera Transform
+
+
+--==< Control List >==--
+
+
+- "W", "A", "S", "D" - Player's movement (in order) forward, left, backwards, right
+
+- "SpaceBar" - Jump
+
+- Mouse/LeftClick - Weapon/Melee Attack
+
+- "LftShift" - Slow walk movement
+
+.--------------------------------------------.
+| ! Camera will NOT be using mouse intputs ! |
+'--------------------------------------------'
+
+01/30/2026 - Movement was tested in scene MovementTest
+
+
+
+  
