@@ -7,7 +7,7 @@ The genre of this game is hack'n'slash / beatem'up
 
 The game would contain third person view, that view will depend on cameras position - no player control over camera, only relay on cameras position. On the other hand camera position will be depend on player movement and what trigger a player will touch.
 
-Camera is fixed on sideview and follows the plyaer. It will not turn with the player unless the specific placement of the camera scripted to do so.
+Camera is fixed on sideview and follows the player. It will not turn with the player unless the specific placement of the camera scripted to do so.
 
 The game will contain only melee weapon.
 
