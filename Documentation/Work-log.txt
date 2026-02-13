@@ -1,4 +1,4 @@
-This documentation contains information about specific things related to the Games Development project
+This documentation contains information about specific things related to this project
 
 --==< Quick Brief >==--
 
