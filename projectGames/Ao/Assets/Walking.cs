@@ -10,19 +10,28 @@ using UnityEngine;
 
 public class Walking : MonoBehaviour
 {
-    public float walkSpeed = 6f; // walking speed
+    private Animator animator;
+    public float walkSpeed = 8f; // walking speed
     public float runSpeed = 8f; // running speed
     public float smoothTime = 0.05f; // how smooth the easing in and out when moving out and stopping
+    public float rotationSpeed = 12f;
 
     public Transform cameraTransform; // reference to the camera for movement direction
 
     private Vector3 currentVelocity; // current velocity of the player
-    private Vector3 velocitySmoothRef; 
+    private Vector3 velocitySmoothRef;
 
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     void Update()
     {
         float horizontal = 0f;
         float vertical = 0f;
+
+     
 
         // old and modified WASD input
         if (Input.GetKey(KeyCode.W)) vertical = 1f;
@@ -43,11 +52,23 @@ public class Walking : MonoBehaviour
 
         Vector3 inputDir = (camForward * vertical + camRight * horizontal).normalized;
 
+        float animationSpeed = inputDir.magnitude;
+        animator.SetFloat("Speed", animationSpeed, 0.1f, Time.deltaTime);
+
         float targetSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed; // Shift to run else walk using ? operator
 
         Vector3 targetVelocity = inputDir * targetSpeed;
 
-        
+        if (inputDir.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(inputDir);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRotation,
+                rotationSpeed * Time.deltaTime
+            );
+        }
+
         currentVelocity = Vector3.SmoothDamp( // Smooth acceleration / deceleration of a player
             currentVelocity,
             targetVelocity,
