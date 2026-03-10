@@ -20,7 +20,7 @@ public class Walking : MonoBehaviour
 
     private Vector3 currentVelocity; // current velocity of the player
     private Vector3 velocitySmoothRef;
-
+    public bool isAttacking; //
 
     void Start()
     {
@@ -31,53 +31,63 @@ public class Walking : MonoBehaviour
         float horizontal = 0f;
         float vertical = 0f;
 
-     
-
-        // old and modified WASD input
-        if (Input.GetKey(KeyCode.W)) vertical = 1f;
-        if (Input.GetKey(KeyCode.S)) vertical = -1f;
-        if (Input.GetKey(KeyCode.A)) horizontal = -1f;
-        if (Input.GetKey(KeyCode.D)) horizontal = 1f;
-
-        // Camera-relative directions
-        Vector3 camForward = cameraTransform.forward; // foward direction eg. vertical
-        Vector3 camRight = cameraTransform.right; // right direction eg. horizontal
-
-        // Flatten camera vectors -setting camera forward vector's y components to 0 so that the player won't move up and down when the camera is looking up and down, same for right vector
-        camForward.y = 0f;
-        camRight.y = 0f;
-
-        camForward.Normalize();
-        camRight.Normalize();
-
-        Vector3 inputDir = (camForward * vertical + camRight * horizontal).normalized;
-
-        float animationSpeed = inputDir.magnitude;
-        animator.SetFloat("Speed", animationSpeed, 0.1f, Time.deltaTime);
-
-        float targetSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed; // Shift to run else walk using ? operator
-
-        Vector3 targetVelocity = inputDir * targetSpeed;
-
-        if (inputDir.magnitude > 0.1f)
+        if (isAttacking)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(inputDir);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRotation,
-                rotationSpeed * Time.deltaTime
-            );
+            // Completely stop movement while attacking
+            currentVelocity = Vector3.zero;
+            velocitySmoothRef = Vector3.zero;
+            return;
         }
 
-        currentVelocity = Vector3.SmoothDamp( // Smooth acceleration / deceleration of a player
-            currentVelocity,
-            targetVelocity,
-            ref velocitySmoothRef,
-            smoothTime
-        );
+        HandleMovement();
+        void HandleMovement()
+        {
+            // old and modified WASD input
+            if (Input.GetKey(KeyCode.W)) vertical = 1f;
+            if (Input.GetKey(KeyCode.S)) vertical = -1f;
+            if (Input.GetKey(KeyCode.A)) horizontal = -1f;
+            if (Input.GetKey(KeyCode.D)) horizontal = 1f;
 
-        
-        transform.Translate(currentVelocity * Time.deltaTime, Space.World); // Move
+            // Camera-relative directions
+            Vector3 camForward = cameraTransform.forward; // foward direction eg. vertical
+            Vector3 camRight = cameraTransform.right; // right direction eg. horizontal
+
+            // Flatten camera vectors -setting camera forward vector's y components to 0 so that the player won't move up and down when the camera is looking up and down, same for right vector
+            camForward.y = 0f;
+            camRight.y = 0f;
+
+            camForward.Normalize();
+            camRight.Normalize();
+
+            Vector3 inputDir = (camForward * vertical + camRight * horizontal).normalized;
+
+            float animationSpeed = inputDir.magnitude;
+            animator.SetFloat("Speed", animationSpeed, 0.1f, Time.deltaTime);
+
+            float targetSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed; // Shift to run else walk using ? operator
+
+            Vector3 targetVelocity = inputDir * targetSpeed;
+
+            if (inputDir.magnitude > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(inputDir);
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRotation,
+                    rotationSpeed * Time.deltaTime
+                );
+            }
+
+            currentVelocity = Vector3.SmoothDamp( // Smooth acceleration / deceleration of a player
+                currentVelocity,
+                targetVelocity,
+                ref velocitySmoothRef,
+                smoothTime
+            );
+
+
+            transform.Translate(currentVelocity * Time.deltaTime, Space.World); // Move
+        }
     }
 
     public void SetCamera(Transform newCamera)
@@ -85,3 +95,4 @@ public class Walking : MonoBehaviour
         cameraTransform = newCamera; // set new camera for movement
     }
 }
+

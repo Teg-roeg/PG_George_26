@@ -13,6 +13,10 @@ The game would be working from keyboard keys and mouse.
 
 The position in space for movement will be depended on Camera Transform
 
+The project contain cloth simulation in object called "Dress"
+
+The game implements colliders and collisions, I.E. Attack will activate collision whenever it touches the enemy collision
+
 
 --==< Control List >==--
 
