@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public AudioSource aud;
 
     private bool isAttacking;
+    private bool canCombo;
 
     void Start()
     {
@@ -21,11 +22,16 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isAttacking)
+        if (Input.GetMouseButtonDown(0))
         {
-            StartAttack();
-            aud.Play();
-
+            if (!isAttacking)
+            {
+                StartAttack();
+            }
+            else if (canCombo)
+            {
+                ComboAttack();
+            }
         }
     }
 
@@ -33,16 +39,33 @@ public class PlayerAttack : MonoBehaviour
     {
         isAttacking = true;
 
+        canCombo = true;
+
         walking.isAttacking = true;
 
         animator.SetTrigger("Attack");
 
+        aud.Play();
+
         Invoke(nameof(StopAttack), attackDuration);
+    }
+
+    void ComboAttack()
+    {
+        canCombo = false;
+
+        animator.SetTrigger("Attack2");
+
+        aud.Play();
+
     }
 
     void StopAttack()
     {
         isAttacking = false;
+
+        canCombo = false;
+        
         walking.isAttacking = false;
     }
 }
