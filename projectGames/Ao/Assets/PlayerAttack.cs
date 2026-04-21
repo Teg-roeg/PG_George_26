@@ -1,17 +1,16 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
-    public float attackDuration = 0.8f;
+    public float comboResetTime = 1f; // time before combo resets
 
     private Walking walking;
     private Animator animator;
-
     public AudioSource aud;
 
-    private bool isAttacking;
-    private bool canCombo;
+    private int comboCounter = 0;
+    private float lastClickTime;
 
     void Start()
     {
@@ -24,48 +23,48 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (!isAttacking)
-            {
-                StartAttack();
-            }
-            else if (canCombo)
-            {
-                ComboAttack();
-            }
+            HandleAttack();
+        }
+
+        // Reset combo if too slow
+        if (Time.time - lastClickTime > comboResetTime)
+        {
+            comboCounter = 0;
         }
     }
 
-    void StartAttack()
+    void HandleAttack()
     {
-        isAttacking = true;
+        if (Time.time - lastClickTime < 0.2f)
+            return;
 
-        canCombo = true;
+        lastClickTime = Time.time;
+
+        comboCounter++;
+
+        if (comboCounter == 1)
+        {
+            animator.SetTrigger("Attack");
+        }
+        else if (comboCounter == 2)
+        {
+            animator.SetTrigger("Attack2");
+        }
+        else if (comboCounter == 3)
+        {
+            animator.SetTrigger("Attack3");
+
+            comboCounter = 0;
+        }
 
         walking.isAttacking = true;
-
-        animator.SetTrigger("Attack");
-
         aud.Play();
 
-        Invoke(nameof(StopAttack), attackDuration);
-    }
-
-    void ComboAttack()
-    {
-        canCombo = false;
-
-        animator.SetTrigger("Attack2");
-
-        aud.Play();
-
+        Invoke(nameof(StopAttack), 0.75f);
     }
 
     void StopAttack()
     {
-        isAttacking = false;
-
-        canCombo = false;
-        
         walking.isAttacking = false;
     }
 }

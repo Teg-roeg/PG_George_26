@@ -4,10 +4,6 @@ What I need to add:
 
 - Jump (Animation/Motion)
 
-- Attack 2
-
-- Attack 3
-
 - Interactable items on E key
 
 - Enemy character

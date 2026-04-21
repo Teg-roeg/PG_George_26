@@ -6,6 +6,7 @@
 //
 //
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 
 public class Walking : MonoBehaviour, IHealth
@@ -28,10 +29,15 @@ public class Walking : MonoBehaviour, IHealth
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
 
+    public PostProcessVolume postProcessVolume;
+
+    private Vignette vignette;
+
     void Start()
     {
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
+        postProcessVolume.profile.TryGetSettings(out vignette);
     }
     void Update()
     {
@@ -96,6 +102,7 @@ public class Walking : MonoBehaviour, IHealth
         if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(10);
+
         }
 
         currentVelocity = Vector3.SmoothDamp( // Smooth acceleration / deceleration of a player
