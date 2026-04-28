@@ -3,7 +3,7 @@
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
-    public float comboResetTime = 1f; // time before combo resets
+    public float comboResetTime = 1f; 
 
     private Walking walking;
     private Animator animator;
@@ -26,7 +26,6 @@ public class PlayerAttack : MonoBehaviour
             HandleAttack();
         }
 
-        // Reset combo if too slow
         if (Time.time - lastClickTime > comboResetTime)
         {
             comboCounter = 0;

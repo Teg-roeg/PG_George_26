@@ -29,9 +29,9 @@ Material:
     m_Floats:
     - _Alpha: 1
     - _BUILTIN_AlphaClip: 0
-    - _BUILTIN_Blend: 0
+    - _BUILTIN_Blend: 2
     - _BUILTIN_CullMode: 2
-    - _BUILTIN_DstBlend: 10
+    - _BUILTIN_DstBlend: 1
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _BUILTIN_SrcBlend: 5
@@ -39,9 +39,9 @@ Material:
     - _BUILTIN_ZTest: 4
     - _BUILTIN_ZWrite: 0
     - _BUILTIN_ZWriteControl: 0
-    - _FrsnelPower: -0.01
+    - _FrsnelPower: 0.67
     m_Colors:
-    - _Color: {r: 5.467093, g: 0, b: 0, a: 0.101960786}
+    - _Color: {r: 1, g: 0, b: 0, a: 0.15232897}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &7662851406522437005
