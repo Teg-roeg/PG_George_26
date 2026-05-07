@@ -1,9 +1,0 @@
-What I need to add:
-
-- Blood particles
-
-- Jump (Animation/Motion)
-
-- Interactable items on E key
-
-- Enemy character

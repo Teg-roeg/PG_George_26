@@ -21,7 +21,7 @@ public class spawnManager : MonoBehaviour
     {
         while(allEnemies.Count <= maxEnemies)
         {
-            GameObject newEnemyGO = Instantiate(enemyCloneTemplate, new Vector3(UnityEngine.Random.Range(-10, 15), -2.70f, UnityEngine.Random.Range(-10, 15)), Quaternion.identity);
+            GameObject newEnemyGO = Instantiate(enemyCloneTemplate, new Vector3(UnityEngine.Random.Range(-15, 20), -2.70f, UnityEngine.Random.Range(-15, 20)), Quaternion.identity);
             allEnemies.Add(newEnemyGO.GetComponent<enemyScript>());
         }
     }

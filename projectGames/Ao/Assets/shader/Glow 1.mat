@@ -41,7 +41,7 @@ Material:
     - _BUILTIN_ZWriteControl: 0
     - _FrsnelPower: 0.67
     m_Colors:
-    - _Color: {r: 1, g: 0, b: 0, a: 0.15232897}
+    - _Color: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &7662851406522437005

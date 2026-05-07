@@ -10,8 +10,11 @@ public class enemyScript : MonoBehaviour
         Attack
     }
 
+    Rigidbody rb;
+
     State currentState = State.Idle;
     Transform target;
+
     internal void ThePlayerIs(Walking player)
     {
         target = player.transform;
@@ -20,20 +23,30 @@ public class enemyScript : MonoBehaviour
 
     void Start()
     {
-
+        rb = GetComponent<Rigidbody>();
     }
 
-    
-    void Update()
+    void FixedUpdate()
     {
         switch (currentState)
         {
             case State.Idle:
-
                 break;
+
             case State.Alert:
-                transform.LookAt(target);
-                transform.position += transform.forward * Time.deltaTime;
+                if (target != null)
+                {
+                    Vector3 direction = target.position - rb.position;
+                    direction.y = 0f;
+                    direction.Normalize();
+
+                    rb.MovePosition(
+                        rb.position + direction * 2f * Time.fixedDeltaTime
+                    );
+                }
+                break;
+
+            case State.Attack:
                 break;
         }
     }

@@ -23,6 +23,7 @@ public class Walking : MonoBehaviour, IHealth
     public Vector3 velocitySmoothRef;
     public bool isAttacking; //
 
+    Collider target;
 
     public float maxHealth = 100f;
     public float currentHealth;
@@ -129,10 +130,7 @@ public class Walking : MonoBehaviour, IHealth
         if (inputDir.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(inputDir);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRotation,
-                rotationSpeed * Time.deltaTime
+            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,rotationSpeed * Time.deltaTime
             );
         }
 
@@ -143,12 +141,8 @@ public class Walking : MonoBehaviour, IHealth
 
         }
 
-        currentVelocity = Vector3.SmoothDamp( // Smooth acceleration / deceleration of a player
-            currentVelocity,
-            targetVelocity,
-            ref velocitySmoothRef,
-            smoothTime
-        );
+
+        currentVelocity = Vector3.SmoothDamp(currentVelocity,targetVelocity,ref velocitySmoothRef,smoothTime);// Smooth acceleration / deceleration of a player
 
 
         transform.Translate(currentVelocity * Time.deltaTime, Space.World); // Move
@@ -225,6 +219,14 @@ public class Walking : MonoBehaviour, IHealth
             if (Time.time - lastDTime < doubleTapTime)
                 StartBurst(Vector3.right);
             lastDTime = Time.time;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            TakeDamage(5);
         }
     }
     public void HandleBurst()
